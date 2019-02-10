@@ -1,0 +1,35 @@
+﻿// ======================================
+// 文件位置：/Controllers
+//
+// 修訂時間：2018-6-22
+// 修訂人員：系統研發中心 張琮華 (thchang)
+// ======================================
+
+Controllers 資料夾為存放 Api 對外方法接口所使用的類別，名稱要以 Controller 結尾，例如：CourseController、ManController...等。
+
+有以下幾點要求：
+
+1. Controller 中方法所要回傳的資料類別定義為 Json 模型，必須放在 /Models/Jsons 下，名稱要以 JsonModel 結尾，請參考該資料夾下的說明檔案
+
+2. Controller 方法必須繼承 BaseApiController，有一個泛型型別參數 S，必須提供 Controller 預設，或大多數要使用的資料存取層類別，例如：BaseApiController<SampleCourseStore>
+
+3. 而在 Controller 中要實作 Store 物件請呼叫 CreateDefaultStore() 方法
+
+4. 如果需要實作非預設的 Store 物件時，可以使用 CreateStore() 方法，此方法有一個泛型型別參數 CS，必須指定 Store 類別名稱，例如：CreateStore<ManStore>()
+
+5. 方法的資料回傳方法，請改使用 Api 開頭的方法，例如：要回傳 OK 200 狀態碼，則呼叫 ApiOk()，大部分 Api 回傳方法都寫在 BaseApiController 中
+
+6. 各個方法必須自行撰寫 try...catch...，但 Catch 中大多應該只需要寫 return ApiServerError(ex);
+   ，且分別要 catch (StoreException) 與 (Exception)，在 ApiServerError 方法中有不同的行為操作，主要是錯誤紀錄 (ErrorLog)
+   ，請參考 SampleCourseController.cs
+
+在建立新的 Controller 類別時，請先依序進行以下流程：
+1. 新建之類別檔案名稱與類別名稱預設要以 Controller 結尾
+2. 將類別繼承 BaseApiController，並指定泛型參數 S 為此 Controller 中大多數方法預設要使用的 Store 類別
+3. 在類別加上 EnableCors 的屬性定義，除非不打算提供跨域呼叫，請參考 SampleCourseController 中的 EnableCors 區段，相關參數說明如下：
+	3-1. origins 允許呼叫端來源主機位址，如果不特別指定可以傳入 *
+	3-2. headers 允許跨域呼叫可以定義的 Header 項目，如果不特別指定可以傳入 *
+	3-3. methods 允許該 Controller 方法可以使用的動詞清單，以逗號分隔，如果全部開放可以傳入 GET, POST, PUT, DELETE, OPTIONS
+4. 在類別加上 RoutePrefix 的屬性定義，傳入 Controller 所對外的接口路徑
+5. 在方法加上使用動詞的屬性定義，如果方法接受 GET 呼叫，則使用 HttpGet 定義，其他還有 HttpPost, HttpPut 與 HttpDelete...等項目，自行類推
+6. 在方法加上 Route 的屬性定義，設定方法在 RoutePrefix 後接續的路徑，如果沒有，也要傳入空字串 ""

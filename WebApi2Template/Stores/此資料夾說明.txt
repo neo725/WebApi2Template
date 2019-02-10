@@ -1,0 +1,31 @@
+﻿// ======================================
+// 文件位置：/Stores
+//
+// 修訂時間：2018-6-22
+// 修訂人員：系統研發中心 張琮華 (thchang)
+// ======================================
+
+Stores 資料夾為存放與資料庫操作所使用的類別，名稱要以 Store 結尾，例如：CourseStore、ManStore...等。
+
+Store 中方法所要回傳的類別定義為資料模型，必須放在 /Models 下，名稱要以 Model 結尾，請參考該資料夾下的說明檔案
+
+範例檔案為 SampleCourseStore.cs，資料庫操作套件使用 Dapper
+如要使用其他方式進行資料庫操作，例如：EF 或 ADO.Net...等，請自行修改
+
+在建立新的 Store 類別時，請先依序進行以下流程：
+1. 新建之類別檔案名稱與類別名稱預設要以 Store 結尾
+2. 將類別繼承 BaseStore，並指定泛型參數 T 為此 Store 中大多數方法預設要回傳的資料模型類別
+3. Store 的預設連線實作：
+	3-1. 在類別中加上基本的建構式，代碼如下 (或參考 /Stores/SampleCourseStore.cs)：
+
+		 public SampleCourseStore()
+		 	: base("ican_db")
+		 { }
+
+
+	3-2. 如果覺得 3-1. 每個類別都要實作建構式太麻煩，可以找到 /Stores/Base/BaseStore.cs 中，
+		 修改 public BaseStore() : this("Db") 這一行代碼所傳入的參數 "Db" 為您的預設連線設定名稱
+
+		 例如：public BaseStore() : this("ican_db")
+
+		 如果使用這個方式實作預設資料庫連線設定，則 3-1 就可以不用，可以參考 /Stores/SampleManStore.cs

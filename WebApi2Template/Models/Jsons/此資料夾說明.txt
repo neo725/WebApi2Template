@@ -1,0 +1,30 @@
+﻿// ======================================
+// 文件位置：/Models/Jsons
+// 關鍵字：Json Model, Snake Case Naming
+//
+// 修訂時間：2018-6-22
+// 修訂人員：系統研發中心 張琮華 (thchang)
+// ======================================
+
+/Models/Jsons 資料夾為存放 Json 模型類別，主要會是使用在 Controller 的回傳
+** 與資料庫所使用的 Model 不一樣，如果是 Store 要傳出的 Data Model，請放在 /Models
+
+BaseJsonModel 定義了中心所規範的 Json 回應標準格式
+ApiResponseJsonModel 為主要 Api Controller 回傳所要使用的資料類別
+
+1. 檔案名稱以 JsonModel 結尾，例如：CourseJsonModel.cs
+2. 資料模型類別相關說明，可以搜尋 POCO 關鍵字參考
+3. 公開屬性名稱請使用單字首字大寫的命名格式，例如：Id, Title, CreateDate
+4. 經由 JsonFormatter 的設定，輸出的屬性名稱命名格式會自動轉換為 Snake Case，即為全部小寫，單字與單字之間以底線符號連接，相關說明請參考底下資源 (#1) (注意事項 : *1, *2)
+5. 屬性的說明註解，如果該屬性可以提供讀取及寫入操作，請說明為 "取得或設定..."，例如：取得或設定課程名稱
+6. 屬性的說明註解，如果該屬性可以僅提供讀取操作，請說明為 "取得..."，例如：取得課程名稱
+7. 屬性的說明註解，如果該屬性可以僅提供寫入操作，請說明為 "設定..."，例如：設定課程名稱
+8. 如果要設定屬性為 null 值時，不輸出對應的 Json，請使用 JsonProperty 的 NullValueHandling 定義，參考 SampleCourseJsonModel.cs 的 UpdateDate 屬性
+
+注意事項：
+*1. 要使用 SnakeNamingCase 功能，專案所參考的 Newtonsoft.Json 套件版本至少要高於或等於 11.0.2
+*2. 此設定請參考 /App_Start/WebApiConfig.cs 中的 config.Formatters.JsonFormatter.SerializerSettings 部分設定
+
+相關資源：
+#1. 命名規則 @ ShunNien's Blog
+https://shunnien.github.io/2017/06/07/naming-conventions/

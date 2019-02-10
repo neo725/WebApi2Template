@@ -1,0 +1,25 @@
+﻿// ======================================
+// 文件位置：/Models
+// 關鍵字：DB Model, POCO, Upper Camel Case
+//
+// 修訂時間：2018-6-22
+// 修訂人員：系統研發中心 張琮華 (thchang)
+// ======================================
+
+Models 資料夾為存放資料庫操作所使用或回傳的資料模型類別
+** 與 Json 所使用的 Model 不一樣，如果是 API Controller 要傳出的 Json Model，請放在 /Models/Jsons
+
+1. 檔案名稱以 Model 結尾，例如：CourseModel.cs
+2. 資料模型類別相關說明，可以搜尋 POCO 關鍵字參考
+3. 公開屬性名稱請使用單字首字大寫的大駝峰式命名格式 (Upper Camel Case)，例如：Id, Title, CreateDate
+4. 對應資料庫欄位的設定，請使用 Attribute 定義，在屬性加上 [Column("...")] 定義，例如：[Column("course_name")]
+5. 屬性的說明註解，如果該屬性可以提供讀取及寫入操作，請說明為 "取得或設定..."，例如：取得或設定課程名稱
+6. 屬性的說明註解，如果該屬性可以僅提供讀取操作，請說明為 "取得..."，例如：取得課程名稱
+7. 屬性的說明註解，如果該屬性可以僅提供寫入操作，請說明為 "設定..."，例如：設定課程名稱
+
+
+相關資源：
+1. Working with POCO Entities
+https://msdn.microsoft.com/en-us/library/dd456853(v=vs.110).aspx
+2. Camel Case - wiki
+https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB
